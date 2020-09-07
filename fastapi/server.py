@@ -11,14 +11,18 @@ app = FastAPI(title="Zero Shot Topic Classification",
               )
 
 
-@app.get("/text_classification/{user_input}")
+@app.get("/text_classification/{user_input}") # print results to UI
 async def text_classification(user_input):
     labels = ['soccer', 'programming', 'sport', 'education', 'jewish', 'israel', 'palestine', 'islam', 'football',
-          'health care', 'movies']
+          'health care', 'movies', 'food']
     return {'results': str(ZSL.print_similarities(user_input, labels))}
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+@app.get("/text_classification/{API_input}") # return results through API
+async def text_classification(API_input):
+    labels = ['soccer', 'programming', 'sport', 'education', 'jewish', 'israel', 'palestine', 'islam', 'football',
+          'health care', 'movies', 'food']
+    return {'results': ZSL.similarities_prob_sort(API_input, labels)}
+
+
 
 
